@@ -34,36 +34,36 @@ public class Main {
 
                 switch (choice) {
                     case 1 -> {
-                        System.out.print("Mã SV: "); String id = sc.nextLine();
-                        System.out.print("Họ tên: "); String name = sc.nextLine();
-                        System.out.print("Ngày sinh (yyyy-MM-dd): "); String dob = sc.nextLine();
-                        System.out.print("Ngành (CNTT/KTPM): "); String major = sc.nextLine();
-                        System.out.print("Điểm TB: "); double gpa = Double.parseDouble(sc.nextLine());
-                        System.out.print("Lớp: "); String cls = sc.nextLine();
-                        SinhVien s = new SinhVien(id, name, dob, major, gpa, cls);
-                        dlsv.addStudent(s);
+                        System.out.print("Mã SV: "); String ma = sc.nextLine();
+                        System.out.print("Họ tên: "); String ten = sc.nextLine();
+                        System.out.print("Ngày sinh (yyyy-MM-dd): "); String ngaysinh = sc.nextLine();
+                        System.out.print("Ngành (CNTT/KTPM): "); String nganh = sc.nextLine();
+                        System.out.print("Điểm TB: "); double dtb = Double.parseDouble(sc.nextLine());
+                        System.out.print("Lớp: "); String lop = sc.nextLine();
+                        SinhVien s = new SinhVien(ma, ten, ngaysinh, nganh, stb, lop);
+                        dlsv.themSinhVien(s);
                     }
                     case 2 -> {
-                        System.out.print("Nhập mã SV cần xóa: ");
-                        dlsv.deleteStudent(sc.nextLine());
+                        System.out.print("Nhập mã sinh viên cần xóa: ");
+                        dlsv.xoaSinhVien(sc.nextLine());
                     }
                     case 3 -> {
-                        System.out.print("Nhập mã SV cần sửa: ");
-                        String idU = sc.nextLine();
-                        System.out.print("Tên mới: "); String nameU = sc.nextLine();
-                        System.out.print("Ngày sinh mới: "); String dobU = sc.nextLine();
-                        System.out.print("Ngành mới: "); String majorU = sc.nextLine();
-                        System.out.print("Điểm TB mới: "); double gpaU = Double.parseDouble(sc.nextLine());
-                        System.out.print("Lớp mới: "); String clsU = sc.nextLine();
-                        dlsv.updateStudent(new SinhVien(idU, nameU, dobU, majorU, gpaU, clsU));
+                        System.out.print("Nhập mã sinh viên cần sửa: ");
+                        String mamoi = sc.nextLine();
+                        System.out.print("Tên mới: "); String tenmoi = sc.nextLine();
+                        System.out.print("Ngày sinh mới: "); String ngaysinhmoi  = sc.nextLine();
+                        System.out.print("Ngành mới: "); String nganhmoi = sc.nextLine();
+                        System.out.print("Điểm TB mới: "); double stbmoi = Double.parseDouble(sc.nextLine());
+                        System.out.print("Lớp mới: "); String lopmoi = sc.nextLine();
+                        dlsv.updateStudent(new SinhVien(mamoi, tenmoi, ngaysinhmoi, nganhmoi, dtbmoi, lopmoi));
                     }
                     case 4 -> {
-                        for (SinhVien st : dlsv.getAllStudents())
+                        for (SinhVien st : dlsv.layDSSinhVien())
                             System.out.println(st);
                     }
                     case 5 -> {
                         System.out.print("Nhập tên lớp: ");
-                        for (SinhVien st : dlsv.getStudentsByClass(sc.nextLine()))
+                        for (SinhVien st : dlsv.laySVTheoLop(sc.nextLine()))
                             System.out.println(st);
                     }
                     case 6 -> System.exit(0);
@@ -73,3 +73,4 @@ public class Main {
         }
     }
 }
+
