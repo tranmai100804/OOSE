@@ -15,17 +15,12 @@ public class DuLieuSinhVien {
 
     public DuLieuSinhVien() throws Exception {
         String url = "jdbc:sqlserver://ocaldb\\\\MSSQLLocalDB;databaseName=StudentDB;encrypt=false;trustServerCertificate=true;";
-        Connection conn = DriverManager.getConnection(url, "sa", "your_password");
-
-        //String url = "jdbc:mysql://localhost:3306/StudentDB";
-       // String user = "root"; // thay bằng user của bạn
-        //String password = ""; // thay bằng mật khẩu
-        //conn = DriverManager.getConnection(url);
+        Connection conn = DriverManager.getConnection(url);
     }
 
-    // Thêm sinh viên
-    public void addStudent(SinhVien s) throws Exception {
-        String sql = "INSERT INTO Student VALUES (?,?,?,?,?,?)";
+   
+    public void themSinhVien(SinhVien s) throws Exception {
+        String sql = "INSERT INTO SinhVien VALUES (?,?,?,?,?,?)";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, s.getmaSV());
             ps.setString(2, s.gethoTen());
@@ -37,18 +32,18 @@ public class DuLieuSinhVien {
         }
     }
 
-    // Xóa sinh viên
-    public void deleteStudent(String id) throws Exception {
-        String sql = "DELETE FROM Student WHERE studentId=?";
+
+    public void xoaSinhVien(String id) throws Exception {
+        String sql = "DELETE FROM SinhVien WHERE maSV=?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, id);
             ps.executeUpdate();
         }
     }
 
-    // Sửa thông tin sinh viên
-    public void updateStudent(SinhVien s) throws Exception {
-        String sql = "UPDATE Student SET fullName=?, birthDate=?, major=?, gpa=?, className=? WHERE studentId=?";
+  
+    public void capNhatSinhVien(SinhVien s) throws Exception {
+        String sql = "UPDATE SinhVien SET hoTen=?, ngaySinh=?, nganhDT=?, dtb=?, lopSH=? WHERE maSV=?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, s.gethoTen());
             ps.setString(2, s.ngaySinh());
@@ -60,19 +55,19 @@ public class DuLieuSinhVien {
         }
     }
 
-    // Lấy danh sách sinh viên
-    public List<SinhVien> getAllStudents() throws Exception {
+ 
+    public List<SinhVien> layDSSinhVien() throws Exception {
         List<SinhVien> list = new ArrayList<>();
         try (Statement st = conn.createStatement()) {
-            ResultSet rs = st.executeQuery("SELECT * FROM Student");
+            ResultSet rs = st.executeQuery("SELECT * FROM SinhVien");
             while (rs.next()) {
                 SinhVien s = new SinhVien(
-                        rs.getString("studentId"),
-                        rs.getString("fullName"),
-                        rs.getString("birthDate"),
-                        rs.getString("major"),
-                        rs.getDouble("gpa"),
-                        rs.getString("className")
+                        rs.getString("Ma Sinh Vien"),
+                        rs.getString("Ho Ten"),
+                        rs.getString("Ngay Sinh"),
+                        rs.getString("Nganh DT"),
+                        rs.getDouble("dtb"),
+                        rs.getString("LopSH")
                 );
                 list.add(s);
             }
@@ -82,20 +77,20 @@ public class DuLieuSinhVien {
     }
 
     // Lấy sinh viên theo lớp
-    public List<SinhVien> getStudentsByClass(String className) throws Exception {
+    public List<SinhVien> laySVTheoLop(String lopSH) throws Exception {
         List<SinhVien> list = new ArrayList<>();
-        String sql = "SELECT * FROM Student WHERE className=?";
+        String sql = "SELECT * FROM SinhVien WHERE lopSH=?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, className);
+            ps.setString(1, lopSH);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     list.add(new SinhVien(
-                            rs.getString("studentId"),
-                            rs.getString("fullName"),
-                            rs.getString("birthDate"),
-                            rs.getString("major"),
-                            rs.getDouble("gpa"),
-                            rs.getString("className")
+                            rs.getString("Ma Sinh Vien"),
+                            rs.getString("Ho Ten"),
+                            rs.getString("Ngay Sinh"),
+                            rs.getString("Nganh DT"),
+                            rs.getDouble("dtb"),
+                            rs.getString("LopSH")
                     ));
                 }
             }
@@ -103,4 +98,5 @@ public class DuLieuSinhVien {
         return list;
     }
 }
+
 
